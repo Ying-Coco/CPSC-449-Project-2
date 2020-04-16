@@ -3,7 +3,7 @@ from flask import jsonify
 
 class Schema:
     def __init__(self):
-        self.conn = sqlite3.connect('service.db', isolation_level=None)
+        self.conn = sqlite3.connect('../service.db', isolation_level=None)
         self.create_vote_table()
 
     def create_vote_table(self):

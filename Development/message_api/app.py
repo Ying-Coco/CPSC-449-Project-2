@@ -3,6 +3,7 @@ from service import msgService
 from flask import Flask
 from flask import request
 
+
 app = Flask(__name__)
 
 @app.route("/msgs")
@@ -13,7 +14,7 @@ def homepage():
 def send_msg():
     return msgService().send_msg(request.get_json())
 
-@app.route("/msgs/delete_msg", methods=['POST'])
+@app.route("/msgs/delete_msg", methods=['DELETE'])
 def delete_msg():
     return msgService().delete_msg(request.get_json())
 
