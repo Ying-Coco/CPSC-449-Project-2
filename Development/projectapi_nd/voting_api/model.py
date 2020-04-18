@@ -15,7 +15,10 @@ class Schema:
             down_vote INTEGER
         );
         """
-        self.conn.execute(query)
+        #this keep giving me an error, see if it gives you an error
+        #self.conn.execute(query)
+        #sqlite3.OperationalError: near "(": syntax error
+        
 
 class VoteModel:
     def __init__(self):
