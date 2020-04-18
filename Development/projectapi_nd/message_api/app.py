@@ -2,7 +2,7 @@ from model import Schema
 from service import msgService
 from flask import Flask
 from flask import request
-
+import json
 
 app = Flask(__name__)
 
@@ -26,7 +26,7 @@ def fav_msg():
 def unfav_msg():
     return msgService().unfav_msg(request.get_json())
 
-    
+
 if __name__ == "__main__":       
     Schema()
     app.run(debug=True) 

@@ -1,5 +1,6 @@
 from model import MsgModel
 from flask import jsonify
+import json
 
 class msgService:
     def __init__(self):
@@ -17,6 +18,6 @@ class msgService:
         result = self.model.fav_msg(params["msg_id"])
         return result
 
-    def unfav_msg(self, params)
+    def unfav_msg(self, params):
         result = self.model.unfav_msg(params["msg_id"])
         return result
