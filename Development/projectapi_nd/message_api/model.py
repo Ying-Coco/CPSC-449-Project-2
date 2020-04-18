@@ -10,7 +10,7 @@ class Schema:
 
         query = """
         CREATE TABLE IF NOT EXISTS "messages"(
-            msg_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+            msg_id INTEGER PRIMARY KEY NOT NULL,
             user_fr VARCHAR,
             user_to VARCHAR,
             msg_time DATETIME DEFAULT CURRENT_TIMESTAMP,
