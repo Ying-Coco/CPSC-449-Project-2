@@ -38,7 +38,7 @@ class PostModel:
                 f'values ("{title}","{text}", "{community}", "{URL}", "{username}", "{postDate}");'
         
         try:
-            self.conn.execute(query);
+            self.conn.execute(query)
 
             return {'message': f'Post with the title:{title} is created!'}
             self.conn.commit()
