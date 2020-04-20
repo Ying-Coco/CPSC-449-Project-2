@@ -67,9 +67,11 @@ class MsgModel:
         self.conn = sqlite3.connect('../service.db', isolation_level=None)
         if not msg_id:
             return {'message': f'Please provide a message id.'}
+        cur = self.conn.cursor()
+        string = 'SELECT * FROM messages WHERE msg_id=%s' % (msg_id)
         
-        id_check = self.conn.execute('SELECT * FROM messages WHERE msg_id= ?', (msg_id,)).fetchall()
-        if id_check != None:
+        id_check = cur.execute(string).fetchall()
+        if id_check:
 
             try:
                 query = f'DELETE FROM messages WHERE msg_id={msg_id}'
