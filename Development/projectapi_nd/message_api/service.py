@@ -7,7 +7,7 @@ class msgService:
         self.model = MsgModel()
 
     def send_msg(self, params):
-        result = self.model.send_msg(params["user_fr"], params["user_to"], params["msg_desc"], params["msg_flag"])
+        result = self.model.send_msg(params["user_fr"], params["user_to"], params["msg_desc"])
         return result
 
     def delete_msg(self, params):

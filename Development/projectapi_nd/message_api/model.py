@@ -16,7 +16,7 @@ class Schema:
             user_to VARCHAR,
             msg_time DATETIME DEFAULT CURRENT_TIMESTAMP,
             msg_desc TEXT,
-            msg_flag BIT,
+            msg_flag BIT NOT NULL DEFAULT 0,
             FOREIGN KEY (user_fr) REFERENCES user(username),
             FOREIGN KEY (user_to) REFERENCES user(username)
         );
@@ -28,22 +28,16 @@ class MsgModel:
         self.table_name = "messages"
 
 #curl -i -X POST -H 'Content-Type:application/json' -d 
-    def send_msg(self, user_fr, user_to, msg_desc, msg_flag):
+    def send_msg(self, user_fr, user_to, msg_desc):
         self.conn = sqlite3.connect('../service.db', isolation_level=None)
         if not user_fr or not user_to:
             return {"status_code": "409", "message": "Sender and/or receiver not entered!"}
             
-        user_fr = self.conn.execute('SELECT username FROM User WHERE username = ?', (user_fr,))
-        user_to = self.conn.execute('SELECT username FROM User WHERE username = ?', (user_to,))
-
-        if not user_fr:
-            return {'message': f'User not founded.'}
-        if not user_to:
-            return {'message': f'User not founded!'}
-
+        #query = self.conn.execute('INSERT INTO messages (user_fr, user_to, msg_desc) VALUES (?, ?, ?);', (user_fr, user_to, msg_desc))
         try: 
-            query = self.conn.execute("INSERT INTO messages (user_fr, user_to, msg_desc, msg_flag) VALUES ((SELECT username FROM users WHERE username=%s), (SELECT username FROM users WHERE username=%s), %s, %s)", user_fr, user_to, msg_desc, msg_flag)
-            return {'message:' f'Message from {user_fr} to {user_fr} has been send.'}
+            query = f'INSERT INTO Messages (user_fr, user_to, msg_desc) VALUES ("{user_fr}", "{user_to}", "{msg_desc}");'
+            self.conn.executemany(query)
+            return {'message:' f'Message from {user_fr} to {user_to} has been send.'}
             self.conn.commit()
         except:
             return {'message': f'Could not send message to {user_to}!'}
@@ -56,7 +50,7 @@ class MsgModel:
         if not msg_id:
             return {'message': f'Please provide a message id.'}
         
-        id_check = self.conn.execute('SELECT * FROM messages WHERE msg_id=%s', (msg_id,)).fetchall()
+        id_check = self.conn.execute('SELECT * FROM messages WHERE msg_id= ?', (msg_id,)).fetchall()
         if id_check != None:
             try:
                 query = f'DELETE FROM messages WHERE msg_id={msg_id}'
@@ -76,7 +70,7 @@ class MsgModel:
         if not msg_id:
             return {'message': f'Please provide a message id.'}
         
-        id_check = self.conn.execute('SELECT * FROM messages WHERE msg_id=%s', (msg_id,)).fetchall()
+        id_check = self.conn.execute('SELECT * FROM messages WHERE msg_id= ?', (msg_id,)).fetchall()
         if id_check != None:
             try:
                 query = f'UPDATE messages SET msg_flag = 1 WHERE msg_id={msg_id}'
@@ -95,7 +89,7 @@ class MsgModel:
         if not msg_id:
             return {'message': f'Please provide a message id.'}
         
-        id_check = self.conn.execute('SELECT * FROM messages WHERE msg_id=%s', (msg_id,)).fetchall()
+        id_check = self.conn.execute('SELECT * FROM messages WHERE msg_id= ?', (msg_id,)).fetchall()
         if id_check != None:
             try:
                 query = f'UPDATE messages SET msg_flag = 0 WHERE msg_id={msg_id}'

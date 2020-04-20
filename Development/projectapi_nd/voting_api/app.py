@@ -33,7 +33,6 @@ def list_top_posts_byvotes():
 def get_list():
     return voteService().get_list(request.get_json())
 
-
 if __name__ == "__main__":       
     Schema()
     app.run(debug=True) 

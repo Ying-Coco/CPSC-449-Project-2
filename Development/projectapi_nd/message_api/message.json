@@ -1,8 +1,5 @@
 {
-    "msg_id" : "1",
-    "user_fr" : "test_user",
-    "user_to" : "test_user2",
-    "msg_time" : "2020-04-18 16:19:30",
-    "msg_desc" : "Hi, how are you",
-    "msg_flag" : "0"
+    "user_fr" : "testuser",
+    "user_to" : "newuser",
+    "msg_desc" : "Fallin' Flower 1 2 3"   
 }

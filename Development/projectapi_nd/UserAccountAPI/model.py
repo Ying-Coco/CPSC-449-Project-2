@@ -28,7 +28,7 @@ class UserModel:
     def create_user(self, user_name, email, karma):
         
         query = f'insert into {self.table_name} ' \
-                f'(username, email, karma) ' \
+                f'(t) ' \
                 f'values ("{user_name}","{email}", "{karma}");'
         
 

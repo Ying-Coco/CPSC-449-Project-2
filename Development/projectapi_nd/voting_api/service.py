@@ -6,15 +6,15 @@ class voteService:
         self.model = VoteModel()
 
     def up_vote(self, params):
-        result = self.model.up_vote(params["vote_id"])
+        result = self.model.up_vote(params["pID"])
         return result
 
     def down_vote(self, params):
-        result = self.model.down_vote(params["vote_id"])
+        result = self.model.down_vote(params["pID"])
         return result
 
     def retrieve_votes(self,params):
-        result = self.model.retrieve_votes(params["vote_id"])
+        result = self.model.retrieve_votes(params["pID"])
         return result
 
     def list_top_posts_byvotes(self, params):

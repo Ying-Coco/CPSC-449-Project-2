@@ -3,7 +3,7 @@ from flask import jsonify
 class Schema:
     def __init__(self):
         # connecting to the database
-        self.conn = sqlite3.connect('posts.db', isolation_level=None)
+        self.conn = sqlite3.connect('../service.db', isolation_level=None)
         # table 
         self.create_posts_table()
 
@@ -11,15 +11,15 @@ class Schema:
 
         query = """
         CREATE TABLE IF NOT EXISTS "Post" (
+            pID INTEGER PRIMARY KEY NOT NULL,
             title TEXT,
             "text" TEXT,
             community TEXT,
             URL TEXT,
             username TEXT,
-            postDate Date,
-            vote_id INTEGER AUTO_INCREMENT UNIQUE NOT NULL,
-            up_vote INTEGER,
-            down_vote INTEGER
+            postDate DATE DEFAULT CURRENT_TIMESTAMP,
+            up_vote INTEGER DEFAULT 0,
+            down_vote INTEGER DEFAULT 0
         );
         """
 
@@ -28,7 +28,7 @@ class Schema:
 
 class PostModel:
     def __init__(self):
-        self.conn = sqlite3.connect('posts.db', isolation_level=None)
+        self.conn = sqlite3.connect('../service.db', isolation_level=None)
         self.table_name = 'Post'
 
     def create_post(self, title, text, community, URL, username, postDate):
