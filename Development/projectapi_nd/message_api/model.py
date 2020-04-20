@@ -72,7 +72,6 @@ class MsgModel:
         
         id_check = cur.execute(string).fetchall()
         if id_check:
-
             try:
                 query = f'DELETE FROM messages WHERE msg_id={msg_id}'
                 self.conn.execute(query)
@@ -92,7 +91,7 @@ class MsgModel:
             return {'message': f'Please provide a message id.'}
         
         id_check = self.conn.execute('SELECT * FROM messages WHERE msg_id= ?', (msg_id,)).fetchall()
-        if id_check != None:
+        if id_check:
             try:
                 query = f'UPDATE messages SET msg_flag = 1 WHERE msg_id={msg_id}'
                 self.conn.execute(query)
@@ -111,7 +110,7 @@ class MsgModel:
             return {'message': f'Please provide a message id.'}
         
         id_check = self.conn.execute('SELECT * FROM messages WHERE msg_id= ?', (msg_id,)).fetchall()
-        if id_check != None:
+        if id_check:
             try:
                 query = f'UPDATE messages SET msg_flag = 0 WHERE msg_id={msg_id}'
                 self.conn.execute(query)
