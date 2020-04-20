@@ -3,7 +3,7 @@ from flask import jsonify
 class Schema:
     def __init__(self):
         # connecting to the database
-        self.conn = sqlite3.connect('user_account.db', isolation_level=None)
+        self.conn = sqlite3.connect('../service.db', isolation_level=None)
         # table 
         self.create_user_table()
 
@@ -22,7 +22,7 @@ class Schema:
 
 class UserModel:
     def __init__(self):
-        self.conn = sqlite3.connect('user_account.db', isolation_level=None)
+        self.conn = sqlite3.connect('../service.db', isolation_level=None)
         self.table_name = 'User'
 
     def create_user(self, user_name, email, karma):
