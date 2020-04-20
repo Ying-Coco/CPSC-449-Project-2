@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route("/accounts")
 def homepage():
     return "User Account Service"
-@app.route("/accounts/create-user", methods=['PUT'])                  
+@app.route("/accounts/create-user", methods=['PUT'])         
 def create_user():                     
     return UserAccountService().create_user(request.get_json())
 

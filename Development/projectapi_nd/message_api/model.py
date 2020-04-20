@@ -32,11 +32,11 @@ class MsgModel:
         self.conn = sqlite3.connect('../service.db', isolation_level=None)
         if not user_fr or not user_to:
             return {"status_code": "409", "message": "Sender and/or receiver not entered!"}
-            
+        #query1 = self.conn.execute('SELECT username FROM')
         #query = self.conn.execute('INSERT INTO messages (user_fr, user_to, msg_desc) VALUES (?, ?, ?);', (user_fr, user_to, msg_desc))
         try: 
-            query = f'INSERT INTO Messages (user_fr, user_to, msg_desc) VALUES ("{user_fr}", "{user_to}", "{msg_desc}");'
-            self.conn.executemany(query)
+            query = self.conn.executemany('INSERT INTO Messages (user_fr, user_to, msg_desc) VALUES (?, ?, ?);', (user_fr, user_to, msg_desc,))
+            #self.conn.execute(query)
             return {'message:' f'Message from {user_fr} to {user_to} has been send.'}
             self.conn.commit()
         except:
