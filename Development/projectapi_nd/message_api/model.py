@@ -32,16 +32,34 @@ class MsgModel:
         self.conn = sqlite3.connect('../service.db', isolation_level=None)
         if not user_fr or not user_to:
             return {"status_code": "409", "message": "Sender and/or receiver not entered!"}
-        #query1 = self.conn.execute('SELECT username FROM')
-        #query = self.conn.execute('INSERT INTO messages (user_fr, user_to, msg_desc) VALUES (?, ?, ?);', (user_fr, user_to, msg_desc))
-        try: 
-            query = self.conn.executemany('INSERT INTO Messages (user_fr, user_to, msg_desc) VALUES (?, ?, ?);', (user_fr, user_to, msg_desc,))
-            #self.conn.execute(query)
-            return {'message:' f'Message from {user_fr} to {user_to} has been send.'}
+
+        cursor = self.conn.cursor()
+        query = f"SELECT username FROM User WHERE username='%s'" % (user_fr)    
+        cursor.execute(query)
+        user_fr = cursor.fetchone()
+        #cursor.execute(f'SELECT username FROM User WHERE username = "{user_to}"')
+        query = f"SELECT username FROM User WHERE username='%s'" % (user_to)  
+        cursor.execute(query)
+        user_to = cursor.fetchone()
+
+
+        if not user_fr:
+            return {'message': "user not found"}
+        if not user_to:
+            return {'message': "user not found"}
+
+        string = ("INSERT INTO messages (user_fr, user_to, msg_desc) VALUES ('%s', '%s', '%s')" % (user_fr[0], user_to[0], msg_desc))
+            
+
+        try:
+            query = cursor.execute(string)
+            return {'message': f'Message from {user_fr[0]} to {user_to[0]} has been sent.'}
             self.conn.commit()
         except:
-            return {'message': f'Could not send message to {user_to}!'}
+            print(query)
+            return {'message': string}
         self.conn.close()
+
 
 
 #curl -i -X DELETE http://localhose:2015/msgs/delete_msg?msg_id=4
@@ -52,6 +70,7 @@ class MsgModel:
         
         id_check = self.conn.execute('SELECT * FROM messages WHERE msg_id= ?', (msg_id,)).fetchall()
         if id_check != None:
+
             try:
                 query = f'DELETE FROM messages WHERE msg_id={msg_id}'
                 self.conn.execute(query)
