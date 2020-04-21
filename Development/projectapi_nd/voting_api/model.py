@@ -56,7 +56,10 @@ class VoteModel:
                 return jsonify(list(result))
             except:
                 return {'message': 'Post not found!'}
+        else:
+                return {'message': 'Post not found!'}
         self.conn.close()
+        return {'message': 'Post not found!'}
     
     #list top post by votes example: curl -i 'http://localhost:2015/votes/list_top_posts_byvotes?n=5'
     def list_top_posts_byvotes(self, n):

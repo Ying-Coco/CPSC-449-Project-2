@@ -10,7 +10,7 @@ class Schema:
     def create_user_table(self):
 
         query = """
-        CREATE TABLE IF NOT EXISTS "User" (
+        CREATE TABLE IF NOT EXISTS "User"(
           username TEXT,
           email TEXT,
           karma INTEGER
@@ -22,14 +22,13 @@ class Schema:
 
 class UserModel:
     def __init__(self):
-        
+        self.conn = sqlite3.connect('../service.db', isolation_level=None)
         self.table_name = 'User'
 
     def create_user(self, user_name, email, karma):
-        self.conn = sqlite3.connect('../service.db', isolation_level=None)
-        query = f'insert into {self.table_name} ' \
-                f'(username, email, karma) ' \
-                f'values ("{user_name}","{email}", "{karma}");'
+        
+        query = f"insert into {self.table_name} " \
+                f"values ('{user_name}','{email}', '{karma}');"
         
 
         try:
@@ -37,11 +36,10 @@ class UserModel:
             return {'message': f'User with the username: {user_name} is created!'}
             self.conn.commit()
         except:
-            return {'message': 'Could not create the user!'}
-        self.conn.close()
+            return {'message': query}
     
     def update_email(self, user_name, email):
-        self.conn = sqlite3.connect('../service.db', isolation_level=None)
+
         query = f'UPDATE {self.table_name} SET email = "{email}" WHERE username = "{user_name};"'
         try:
             self.conn.execute(query)
@@ -49,10 +47,8 @@ class UserModel:
             self.conn.commit()
         except:
             return {'message': f'Could not update the email for {user_name};'}
-        self.conn.close()
     
     def increment_karma(self, user_name):
-        self.conn = sqlite3.connect('../service.db', isolation_level=None)
         query = f'UPDATE {self.table_name} SET karma = karma + 1 WHERE username = "{user_name}";'
         try:
             self.conn.execute(query)
@@ -60,10 +56,8 @@ class UserModel:
             self.conn.commit()
         except:
             return {'message': f'Could not increment the karma for {user_name}'}
-        self.conn.close()
     
     def decrement_karma(self, user_name):
-        self.conn = sqlite3.connect('../service.db', isolation_level=None)
         query = f'UPDATE {self.table_name} SET karma = karma - 1 WHERE username = "{user_name}";'
         try:
             self.conn.execute(query)
@@ -71,10 +65,16 @@ class UserModel:
             self.conn.commit()
         except:
             return {'message': f'Could not decrement the karma for {user_name};'}
-        self.conn.close()
     
     def deactivate_account(self, user_name):
-        self.conn = sqlite3.connect('../service.db', isolation_level=None)
+        
+        query = f"SELECT * from User WHERE username = '{user_name}'"
+
+        test = self.conn.execute(query).fetchall()
+
+        if not test:
+            return {'message': f'Could not deactivate the account for {user_name}.'}
+
         query = f'DELETE FROM {self.table_name} ' \
                 f'WHERE username = "{user_name}";'
         try:
@@ -83,5 +83,4 @@ class UserModel:
             self.conn.commit()
         except:
             return {'message': f'Could not deactivate the account for {user_name}.'}
-        self.conn.close()
     

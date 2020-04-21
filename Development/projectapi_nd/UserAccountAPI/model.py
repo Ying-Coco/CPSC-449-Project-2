@@ -67,6 +67,14 @@ class UserModel:
             return {'message': f'Could not decrement the karma for {user_name};'}
     
     def deactivate_account(self, user_name):
+        
+        query = f"SELECT * from User WHERE username = '{user_name}'"
+
+        test = self.conn.execute(query).fetchall()
+
+        if not test:
+            return {'message': f'Could not deactivate the account for {user_name}.'}
+
         query = f'DELETE FROM {self.table_name} ' \
                 f'WHERE username = "{user_name}";'
         try:

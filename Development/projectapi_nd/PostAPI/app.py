@@ -14,7 +14,7 @@ def homepage():
 def create_post():                     
     return PostService().create_post(request.get_json())
 
-@app.route('/posts/delete', methods=['POST'])
+@app.route('/posts/delete', methods=['DELETE'])
 def delete_post():
     return PostService().delete_post(request.get_json())
 

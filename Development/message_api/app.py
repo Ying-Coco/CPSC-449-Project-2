@@ -2,7 +2,7 @@ from model import Schema
 from service import msgService
 from flask import Flask
 from flask import request
-
+import json
 
 app = Flask(__name__)
 
@@ -21,6 +21,11 @@ def delete_msg():
 @app.route("/msgs/fav_msg", methods=['POST'])
 def fav_msg():
     return msgService().fav_msg(request.get_json())
+
+@app.route("/msgs/unfav_msg", methods=['POST'])
+def unfav_msg():
+    return msgService().unfav_msg(request.get_json())
+
 
 if __name__ == "__main__":       
     Schema()

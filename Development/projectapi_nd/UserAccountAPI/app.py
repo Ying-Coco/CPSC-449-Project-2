@@ -25,7 +25,7 @@ def increment_karma():
 def decrement_karma():
     return UserAccountService().decrement_karma(request.get_json())
 
-@app.route('/accounts/deactivate-account', methods=['POST'])
+@app.route('/accounts/deactivate-account', methods=['DELETE'])
 def deactivate_account():
     return UserAccountService().deactivate_account(request.get_json())
 
