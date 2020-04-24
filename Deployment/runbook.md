@@ -8,7 +8,7 @@
 |Level 2 | SDET           | ywen1306@csu.fullerton.edu     | Yinglin Wen - 4/23/2020         |
 |Level 3 | Operation      | almuhana@csu.fullerton.edu     | Abdulmalik Almuhana - 4/23/2020 |
 
-
+ 
 # Requirements
 
 User's system must have installed: Flask v1.1.1, Caddy v1.0.4, and Gunicorn v20.0.4.
@@ -64,5 +64,49 @@ After staring the locust server, go to http://localhost:8089, enter your desired
 | Post Database    | /Deployment/PostAPI/posts.db               |
 | Account Database | /Deployment/UserAccountAPI/user_account.db |
 
+# Routes
+All routes should be accessed via http://localhost:2015
+
+## Messages Service
+
+| Endpoint | Request Type | Funcionality | Parameters (if any) |
+| -------- | ------------ | ------------ | ------------------- |
+| /msgs    | **GET**  | Show welcome Message |      |
+| /msgs/send_msg | **POST** | Sends a message | *user_fr* (sender's username), *user_to* (receiver's username), *msg_desc* (body of message) |
+| /msgs/delete_msg | **DELETE** | Deletes a message | *msg_id* (message id) |
+| /msgs/fav_msg | **POST** | Mark a message as a favorite | *msg_id* (message id) |
+| /msgs/unfav_msgs | **POST** | Mark a message as unfavorite | *msg_id* (message id) |
+
+## Posts Service
+
+| Endpoint | Request Type | Functionality | Parameters (if any) |
+| -------- | ------------ | ------------- | ------------------- |
+| /posts | **GET** | Show hello message | |
+| /posts/create-post | **PUT** | Creates a post | *title* , *text* , *community* , *URL* , *username* , *postDate* |
+| /posts/delete | **DELETE** | Deletes a post | *title* |
+| /posts/retrieve | **GET** | Retrieves a post | *title* |
+| /posts/list-n-particular | **GET** | Lists n particular posts | *community* , *n* (number of posts) |
+| /posts/list-recent | **GET** | Lists the most recent n posts | *n* (number of posts) |
 
 
+## User Account Service
+
+| Endpoint | Request Type | Functionality | Parameters (if any) |
+| -------- | ------------ | ------------- | ------------------- |
+| /accounts | **GET** | Shows user account service message | |
+| /accounts/create-user | **PUT** | Creates a user account | *user_name* ,*email* , *karma* |
+| /accounts/update-email | **POST** | Updates email of user | *user_name* , *email* |
+| /accounts/increment-karma | **POST** | Increments a user's karma by 1 | *user_name* |
+| /accounts/decrement-karma | **POST** | Decrements a user's karma by 1 | *user_name* |
+| /accounts/deactivate-account | **DELETE** | Deactivates account of user | *user_name* |
+
+## Voting Service
+
+| Endpoint | Request Type | Functionality | Parameters (if any) |
+| -------- | ------------ | ------------- | ------------------- |
+| /votes | **GET** | Shows Hello message | |
+| /votes/up_vote | **POST** | Adds vote count by 1 | *pID* (post ID) |
+| /votes/down_vote | **POST** | Decreases vote count by 1 | *pID* (post ID) |
+| /votes/retrieve_votes | **GET** | Retrieves votes for a post | *pID* (post ID) |
+| /votes/list_top_posts_byvotes | **GET** | Lists top posts by vote count | *n* (number of posts) |
+| /votes/get_list | **GET** | Gets list of votes in a post | *title* |
