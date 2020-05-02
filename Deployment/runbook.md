@@ -4,8 +4,8 @@
 
 |        | Team           | Contact Info                   | Runbook Review                  |
 |--------|----------------|--------------------------------|---------------------------------|
-|Level 1 | Dev            | bobberino98@csu.fullerton.edu  | James Dobson - 4/23/2020        |
-|Level 2 | SDET           | ywen1306@csu.fullerton.edu     | Yinglin Wen - 4/23/2020         |
+|Level 1 | Dev            | ywen1306@csu.fullerton.edu     | Yinglin Wen - 4/23/2020         |
+|Level 2 | SDET           | bobberino98@csu.fullerton.edu  | James Dobson - 4/23/2020        |
 |Level 3 | Operation      | almuhana@csu.fullerton.edu     | Abdulmalik Almuhana - 4/23/2020 |
 
  
