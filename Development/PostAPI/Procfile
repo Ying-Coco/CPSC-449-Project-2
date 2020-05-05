@@ -1,3 +1,0 @@
-posts: gunicorn3 wsgi:app
-
-
